@@ -47,7 +47,7 @@ export default function OwnerDashboard() {
         <div className="view-content">
           <div className="stats-row">
             <div className="stat-card"><div className="stat-label">Total Invested</div><div className="stat-value blue">₹{totalInvested.toLocaleString()}</div></div>
-            <div className="stat-card"><div className="stat-label">Target Revenue</div><div className="stat-value">{₹{totalTarget.toLocaleString()}}</div></div>
+            <div className="stat-card"><div className="stat-label">Target Revenue</div><div className="stat-value">₹{totalTarget.toLocaleString()}</div></div>
             <div className="stat-card"><div className="stat-label">Collected So Far</div><div className="stat-value green">₹{totalCollected.toLocaleString()}</div></div>
             <div className="stat-card"><div className="stat-label">Expected Profit</div><div className={`stat-value ${totalProfit>=0?"green":"red"}`}>₹{totalProfit.toLocaleString()}</div></div>
             <div className="stat-card"><div className="stat-label">Still to Collect</div><div className="stat-value red">₹{Math.max(0,stillToCollect).toLocaleString()}</div></div>
