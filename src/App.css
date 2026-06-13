@@ -131,6 +131,13 @@ body {
 .data-table td.red { color: #dc2626; }
 .data-table td.sub, .sub { color: #9ca3af; font-size: 12px; }
 .empty-row { padding: 20px 14px; color: #9ca3af; font-style: italic; }
+.product-search { padding: 12px 16px; background: #fff; border-bottom: 1px solid #f3f4f6; }
+.product-search input {
+  width: 100%; max-width: 360px; padding: 9px 12px; border-radius: 7px;
+  border: 1px solid #d1d5db; font-size: 14px; background: #fff;
+  color: #1a1a1a; outline: none;
+}
+.product-search input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
 
 /* ── Progress ────────────────────────────────────────── */
 .prog-bar { height: 6px; background: #f3f4f6; border-radius: 3px; overflow: hidden; display: inline-block; width: 80px; vertical-align: middle; }
@@ -147,6 +154,7 @@ body {
 
 /* ── Staff Product Grid ──────────────────────────────── */
 .staff-product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 12px; }
+.view-content > .product-search { border: 1px solid #e5e5e0; border-radius: 10px; }
 .staff-product-card {
   background: #fff; border-radius: 10px; border: 1px solid #e5e5e0;
   padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;

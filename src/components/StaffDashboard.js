@@ -9,6 +9,7 @@ export default function StaffDashboard() {
   const [sales, setSales] = useState([]);
   const [showRecord, setShowRecord] = useState(false);
   const [view, setView] = useState("record");
+  const [productSearch, setProductSearch] = useState("");
 
   useEffect(() => {
     const u1 = subscribeProducts(setProducts);
@@ -18,6 +19,12 @@ export default function StaffDashboard() {
 
   const mySales = sales.filter(s => s.staffName === user?.name);
   const myTotal = mySales.reduce((s, sale) => s + (sale.amountCollected || 0), 0);
+  const normalizedProductSearch = productSearch.trim().toLowerCase();
+  const filteredProducts = products.filter((product) =>
+    [product.name, product.category].some((value) =>
+      String(value || "").toLowerCase().includes(normalizedProductSearch)
+    )
+  );
 
   const formatTs = (ts) => {
     if (!ts) return "";
@@ -40,8 +47,17 @@ export default function StaffDashboard() {
 
       {view === "record" && (
         <div className="view-content">
+          <div className="product-search">
+            <input
+              type="search"
+              value={productSearch}
+              onChange={(event) => setProductSearch(event.target.value)}
+              placeholder="Search products by name or category"
+              aria-label="Search products by name or category"
+            />
+          </div>
           <div className="staff-product-grid">
-            {products.map(p => {
+            {filteredProducts.map(p => {
               const collected = p.collectedAmount || 0;
               const remaining = Math.max(0, p.targetRevenue - collected);
               const pct = p.targetRevenue ? Math.min(100, Math.round(collected / p.targetRevenue * 100)) : 0;
@@ -68,6 +84,7 @@ export default function StaffDashboard() {
               );
             })}
             {products.length === 0 && <div className="empty-row">No products added by owner yet</div>}
+            {products.length > 0 && filteredProducts.length === 0 && <div className="empty-row">No products found</div>}
           </div>
         </div>
       )}

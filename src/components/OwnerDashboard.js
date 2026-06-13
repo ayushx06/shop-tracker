@@ -10,6 +10,7 @@ export default function OwnerDashboard() {
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showRecordSale, setShowRecordSale] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [productSearch, setProductSearch] = useState("");
 
   useEffect(() => {
     const u1 = subscribeProducts(setProducts);
@@ -22,6 +23,12 @@ export default function OwnerDashboard() {
   const totalCollected = products.reduce((s, p) => s + (p.collectedAmount || 0), 0);
   const totalProfit = totalTarget - totalInvested;
   const stillToCollect = totalTarget - totalCollected;
+  const normalizedProductSearch = productSearch.trim().toLowerCase();
+  const filteredProducts = products.filter((product) =>
+    [product.name, product.category].some((value) =>
+      String(value || "").toLowerCase().includes(normalizedProductSearch)
+    )
+  );
 
   const formatTs = (ts) => {
     if (!ts) return "";
@@ -103,10 +110,19 @@ export default function OwnerDashboard() {
       {view === "products" && (
         <div className="view-content">
           <div className="table-card">
+            <div className="product-search">
+              <input
+                type="search"
+                value={productSearch}
+                onChange={(event) => setProductSearch(event.target.value)}
+                placeholder="Search products by name or category"
+                aria-label="Search products by name or category"
+              />
+            </div>
             <table className="data-table">
               <thead><tr><th>Product</th><th>Category</th><th>Cost (₹)</th><th>Target (₹)</th><th>Collected (₹)</th><th>Profit (₹)</th><th>Actions</th></tr></thead>
               <tbody>
-                {products.map(p => (
+                {filteredProducts.map(p => (
                   <tr key={p.id}>
                     <td><strong>{p.name}</strong></td>
                     <td>{p.category}</td>
@@ -121,6 +137,7 @@ export default function OwnerDashboard() {
                   </tr>
                 ))}
                 {products.length === 0 && <tr><td colSpan={7} className="empty-row">No products yet</td></tr>}
+                {products.length > 0 && filteredProducts.length === 0 && <tr><td colSpan={7} className="empty-row">No products found</td></tr>}
               </tbody>
             </table>
           </div>
