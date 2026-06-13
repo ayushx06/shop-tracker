@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Anyone with the app can read/write (PIN auth is handled in the app)
+    // For extra security later, you can restrict by adding Firebase Authentication
+
+    match /products/{docId} {
+      allow read: true;
+      allow write: true;
+    }
+    match /sales/{docId} {
+      allow read: true;
+      allow write: true;
+    }
+    match /purchases/{docId} {
+      allow read: true;
+      allow write: true;
+    }
+  }
+}
